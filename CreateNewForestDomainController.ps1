@@ -52,6 +52,18 @@ try {
         exit
     }
     Write-Host -ForegroundColor Green "AD DS est bien installe dans le serveur."
+
+    # Check if the server is already a domain controller
+    Write-Host -ForegroundColor Yellow "Vérification si le serveur est déjà un contrôleur de domaine..."
+
+    $IsDomainController = Get-ADDomainController -Filter * -ErrorAction SilentlyContinue
+
+    if ($IsDomainController) {
+        Write-Host -ForegroundColor Yellow "Ce serveur est déjà un contrôleur de domaine."
+        exit
+    }
+
+    Write-Host -ForegroundColor Green "Ce serveur n'est pas encore un contrôleur de domaine."
 } catch {
     Write-Host -ForegroundColor Red "Erreur lors du check de AD DS : [$_]"
 }
