@@ -118,6 +118,7 @@ try {
     Write-Host -ForegroundColor Red "Fatal error. Erreur lors de l'ouverture de la pop-up : [$_]"
 }
 
+# Promotion du serveur en tant controlleur de domaine, et creation d'une foret
 try {
     Write-Host -ForegroundColor Yellow "Promotion du serveur en tant que controlleur de domaine EN COURS..."
 
@@ -133,10 +134,10 @@ try {
         -ForestMode "WinThreshold" `
         -NoRebootOnCompletion:$false `
         -SafeModeAdministratorPassword $DSRMPWPlainText `
-        -Force:$true
+        -Force:$true `
+        -ErrorAction Stop
 } catch {
     Write-Host -ForegroundColor Red "Fatal error. Erreur lors de la promotion du serveur en tant que controlleur de domaine : [$_]"
 }
 
 Write-Host -ForegroundColor Green "PROMOTION TERMINE ! Veuillez redemarrer le serveur pour appliquer les modifications et finaliser la configuration du contrôleur de domaine."
-
