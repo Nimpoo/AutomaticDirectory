@@ -42,6 +42,8 @@ function Test-PasswordPolicy {
 ######################################################################################################
 
 # Check if AD DS is already installed
+Write-Host -ForegroundColor Yellow "Verification de la presence d'AD DS en cours..."
+
 $IsInstalled = Get-WindowsFeature -Name AD-Domain-Services -ErrorAction Stop
 
 try {
@@ -138,6 +140,7 @@ try {
         -ErrorAction Stop
 } catch {
     Write-Host -ForegroundColor Red "Fatal error. Erreur lors de la promotion du serveur en tant que controlleur de domaine : [$_]"
+    exit
 }
 
 Write-Host -ForegroundColor Green "PROMOTION TERMINE ! Veuillez redemarrer le serveur pour appliquer les modifications et finaliser la configuration du contrôleur de domaine."
