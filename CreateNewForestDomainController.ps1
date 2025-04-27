@@ -123,7 +123,7 @@ try {
     Write-Host -ForegroundColor Yellow "Promotion du serveur en tant que controlleur de domaine EN COURS..."
 
     Install-ADDSForest `
-        -CreateDnsDelegation:$CreateDnsDelegation `
+        -CreateDnsDelegation:$false `
         -DomainName $DomainAddress `
         -DomainNetbiosName $NetbiosName `
         -DatabasePath "C:\Windows\NTDS" `
