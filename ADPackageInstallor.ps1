@@ -1,10 +1,11 @@
 # Installation de "Active Directory Domain Services"
-$ADDS = Get-WindowsFeature -Name AD-Domain-Services
+$ADDS = Get-WindowsFeature -Name AD-Domain-Services -ErrorAction Stop
 try {
     if ($ADDS.Installed) {
         Write-Host -ForegroundColor Blue "Active Directory Domain Service est DEJA installe."
     } else {
-        Add-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools -IncludeAllSubFeature
+        Write-Host -ForegroundColor Yellow "Installation d'Active Directory Domain Services EN COURS..."
+        Add-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools -IncludeAllSubFeature -ErrorAction Stop
         Write-Host -ForegroundColor Green "Active Directory Domain Service est desormais installe."
     }
 } catch {
@@ -12,12 +13,13 @@ try {
 }
 
 # Installation de "Domain Name Service"
-$DNS = Get-WindowsFeature -Name DNS
+$DNS = Get-WindowsFeature -Name DNS -ErrorAction Stop
 try {
     if ($DNS.Installed) {
         Write-Host -ForegroundColor Blue "DNS est DEJA installe."
     } else {
-        Add-WindowsFeature -Name DNS -IncludeManagementTools -IncludeAllSubFeature
+        Write-Host -ForegroundColor Yellow "Installation de DNS EN COURS..."
+        Add-WindowsFeature -Name DNS -IncludeManagementTools -IncludeAllSubFeature -ErrorAction Stop
         Write-Host -ForegroundColor Green "DNS est desormais installe."
     }
 } catch {
@@ -25,12 +27,13 @@ try {
 }
 
 # Installation de "RSAT-AD-Tools"
-$RSAT = Get-WindowsFeature -Name RSAT-AD-Tools
+$RSAT = Get-WindowsFeature -Name RSAT-AD-Tools -ErrorAction Stop
 try {
     if ($RSAT.Installed) {
         Write-Host -ForegroundColor Blue "RSAT-AD-Tools est DEJA installe."
     } else {
-        Add-WindowsFeature -Name RSAT-AD-Tools -IncludeManagementTools -IncludeAllSubFeature
+        Write-Host -ForegroundColor Yellow "Installation de RSAT-AD-Tools EN COURS..."
+        Add-WindowsFeature -Name RSAT-AD-Tools -IncludeManagementTools -IncludeAllSubFeature -ErrorAction Stop
         Write-Host -ForegroundColor Green "RSAT-AD-Tools est desormais installe."
     }
 } catch {
