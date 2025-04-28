@@ -42,31 +42,34 @@ function Test-PasswordPolicy {
 ######################################################################################################
 
 # Check if AD DS is already installed
-Write-Host -ForegroundColor Yellow "Verification de la presence d'AD DS en cours..."
+Write-Host -ForegroundColor Yellow "Vérification de la présence d'AD DS en cours..."
 
 $IsInstalled = Get-WindowsFeature -Name AD-Domain-Services -ErrorAction Stop
 
 try {
     if (-not $IsInstalled.Installed) {
-        Write-Host -ForegroundColor Yellow "AD DS n'est pas installe. Veuillez installer AD DS avant de promouvoir ce serveur en tant que controlleur de domaine (ADPackageInstallor.ps1)."
+        Write-Host -ForegroundColor Yellow "AD DS n'est pas installé. Veuillez installer AD DS avant de promouvoir ce serveur en tant que contrôleur de domaine (ADPackageInstallor.ps1)."
         exit
     }
-    Write-Host -ForegroundColor Green "AD DS est bien installe dans le serveur."
+    Write-Host -ForegroundColor Green "AD DS est bien installé sur le serveur."
 
     # Check if the server is already a domain controller
     Write-Host -ForegroundColor Yellow "Vérification si le serveur est déjà un contrôleur de domaine..."
 
-    $IsDomainController = Get-ADDomainController -Filter * -ErrorAction SilentlyContinue
+    # Use WMI to check if the server is a domain controller
+    $IsDomainController = Get-WmiObject -Class Win32_ComputerSystem -Property DomainRole -ErrorAction Stop
 
-    if ($IsDomainController) {
+    if ($IsDomainController.DomainRole -eq 4 -or $IsDomainController.DomainRole -eq 5) {
         Write-Host -ForegroundColor Yellow "Ce serveur est déjà un contrôleur de domaine."
         exit
     }
 
     Write-Host -ForegroundColor Green "Ce serveur n'est pas encore un contrôleur de domaine."
 } catch {
-    Write-Host -ForegroundColor Red "Erreur lors du check de AD DS : [$_]"
+    Write-Host -ForegroundColor Red "Erreur lors de la vérification d'AD DS ou du statut du contrôleur de domaine : [$_]"
+    exit
 }
+
 
 # Charger l'assembly Microsoft.VisualBasic pour pouvoir ouvrir des pop-ups
 try {
