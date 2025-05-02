@@ -50,6 +50,7 @@ try {
 # Setup du SaveFileDialog pour les users (pop up pour enregistrer un fichier)
 try {
     $saveFileDialogUsers = New-Object System.Windows.Forms.SaveFileDialog -ErrorAction Stop
+    $saveFileDialogUsers.InitialDirectory = [Environment]::GetFolderPath("Desktop")
     $saveFileDialogUsers.Filter = "CSV Files (*.csv)|*.csv"
     $saveFileDialogUsers.Title = "Save CSV File"
     $saveFileDialogUsers.FileName = "AD_Domolia_Users.csv"
@@ -70,6 +71,7 @@ try {
 # Setup du SaveFileDialog pour les groups (pop up pour enregistrer un fichier)
 try {
     $saveFileDialogGroups = New-Object System.Windows.Forms.SaveFileDialog -ErrorAction Stop
+    $saveFileDialogGroups.InitialDirectory = [Environment]::GetFolderPath("Desktop")
     $saveFileDialogGroups.Filter = "CSV Files (*.csv)|*.csv"
     $saveFileDialogGroups.Title = "Save CSV File for Groups"
     $saveFileDialogGroups.FileName = "AD_Domolia_Groups.csv"
