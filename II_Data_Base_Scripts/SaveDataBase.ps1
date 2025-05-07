@@ -3,6 +3,7 @@ try {
     Add-Type -AssemblyName Microsoft.VisualBasic
 } catch {
     Write-Host -ForegroundColor Red "Fatal Error. Erreur lors du chargement de l'assembly 'Microsoft.VisualBasic' : [$_]"
+    exit
 }
 
 # Chargement de l'assembly "System.Windows.Forms" pour le SaveFileDialog
@@ -10,6 +11,7 @@ try {
     Add-Type -AssemblyName System.Windows.Forms
 } catch {
     Write-Host -ForegroundColor Red "Fatal Error. Erreur lors du chargement de l'assembly 'System.Windows.Forms' : [$_]"
+    exit
 }
 
 
@@ -66,6 +68,7 @@ try {
     Write-Host -ForegroundColor Cyan "Emplacement de la sauvegarde : [$Path]"
 } catch {
     Write-Host -ForegroundColor Red "Fatal Error. Erreur lors de la creation du SaveFileDialog : [$_]"
+    exit
 }
 
 # Setup du SaveFileDialog pour les groups (pop up pour enregistrer un fichier)
@@ -106,6 +109,7 @@ try {
     Write-Host -ForegroundColor Cyan "Delimiteur pour le fichier de sauvegarde .CSV : [$Delimiter]"
 } catch {
     Write-Host -ForegroundColor Red "Fatal Error. Erreur lors de l'obtention du delimiteur : [$_]"
+    exit
 }
 
 # Pop up pour obtenir les attributs des utilisateurs à enregistrer
