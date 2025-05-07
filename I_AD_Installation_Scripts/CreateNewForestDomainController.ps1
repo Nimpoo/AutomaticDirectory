@@ -126,7 +126,12 @@ try {
         Write-Host -ForegroundColor Red "Le password ne peut pas etre vide."
         exit
     }
-    if (-not (Test-PasswordPolicy -Password $DSRMPW)) {
+    try {
+        if (-not (Test-PasswordPolicy -Password $DSRMPW)) {
+            exit
+        }
+    } catch {
+        Write-Host -ForegroundColor Red "Erreur lors de l'execution de la fonction 'Test-PasswordPolicy' : [$_]"
         exit
     }
 
