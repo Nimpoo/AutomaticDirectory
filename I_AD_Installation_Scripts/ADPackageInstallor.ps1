@@ -10,6 +10,7 @@ try {
     }
 } catch {
     Write-Host -ForegroundColor Red "Erreur lors de l'installation de AD DS : [$_]"
+    exit
 }
 
 # Installation de "Domain Name Service"
@@ -24,6 +25,7 @@ try {
     }
 } catch {
     Write-Host -ForegroundColor Red "Erreur lors de l'installation de DNS : [$_]"
+    exit
 }
 
 # Installation de "RSAT-AD-Tools"
@@ -38,4 +40,5 @@ try {
     }
 } catch {
     Write-Host -ForegroundColor Red "Erreur lors de l'installation de RSAT-AD-Tools : [$_]"
+    exit
 }
