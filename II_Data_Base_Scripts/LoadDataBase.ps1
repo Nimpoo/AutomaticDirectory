@@ -3,6 +3,7 @@ try {
     Add-Type -AssemblyName Microsoft.VisualBasic -ErrorAction Stop
 } catch {
     Write-Host -ForegroundColor Red "Fatal Error. Erreur lors du chargement de l'assembly 'Microsoft.VisualBasic' : [$_]"
+    exit
 }
 
 # Chargement de l'assembly "System.Windows.Forms" pour le SaveFileDialog
@@ -10,6 +11,7 @@ try {
     Add-Type -AssemblyName System.Windows.Forms -ErrorAction Stop
 } catch {
     Write-Host -ForegroundColor Red "Fatal Error. Erreur lors du chargement de l'assembly 'System.Windows.Forms' : [$_]"
+    exit
 }
 
 
