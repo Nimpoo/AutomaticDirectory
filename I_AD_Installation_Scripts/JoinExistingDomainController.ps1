@@ -37,6 +37,7 @@ try {
     Add-Type -AssemblyName Microsoft.VisualBasic -ErrorAction Stop
 } catch {
     Write-Host -ForegroundColor Red "Fatal error. Erreur lors du chargement de l'assembly 'Microsoft.VisualBasic' : [$_]"
+    exit
 }
 
 # Pop-up ouverte pour taper le nom du Controlleur de Domain
