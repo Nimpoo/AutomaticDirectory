@@ -76,6 +76,7 @@ try {
     Add-Type -AssemblyName Microsoft.VisualBasic -ErrorAction Stop
 } catch {
     Write-Host -ForegroundColor Red "Fatal error. Erreur lors du chargement de l'assembly 'Microsoft.VisualBasic' : [$_]"
+    exit
 }
 
 # Pop-up ouverte pour taper le nom du Controlleur de Domain
@@ -93,6 +94,7 @@ try {
     Write-Host -ForegroundColor Cyan "Le nom de votre nom de domaine : [$DomainAddress]"
 } catch {
     Write-Host -ForegroundColor Red "Fatal error. Erreur lors de l'ouverture de la pop-up : [$_]"
+    exit
 }
 
 # Pop-up ouverte pour taper le Netbios name
@@ -114,6 +116,7 @@ try {
     Write-Host -ForegroundColor Cyan "Le Netbios name : [$NetbiosName]"
 } catch {
     Write-Host -ForegroundColor Red "Fatal error. Erreur lors de l'ouverture de la pop-up : [$_]"
+    exit
 }
 
 # Pop-up ouverte pour taper le SafeModePassword
@@ -133,6 +136,7 @@ try {
 
 } catch {
     Write-Host -ForegroundColor Red "Fatal error. Erreur lors de l'ouverture de la pop-up : [$_]"
+    exit
 }
 
 # Promotion du serveur en tant controlleur de domaine, et creation d'une foret
