@@ -182,8 +182,8 @@ try {
             Write-Host -ForegroundColor Yellow "Type d'objet non reconnu : $($item.ObjectType)"
         }
     }
-    Write-Host -ForegroundColor Green -BackgroundColor DarkCyan "Importation des utilisateurs et/ou des groupes terminée avec succès !"
 } catch {
     Write-Host -ForegroundColor Red "Fatal Error. Erreur lors de l'importation des utilisateurs et des groupes : [$_]"
     exit
 }
+Write-Host -ForegroundColor Green -BackgroundColor DarkCyan "Importation des utilisateurs et/ou des groupes terminée avec succès !"
