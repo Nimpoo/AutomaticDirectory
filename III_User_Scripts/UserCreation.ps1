@@ -227,11 +227,7 @@ Write-Host -ForegroundColor Cyan -BackgroundColor DarkGray "ChangePasswordAtLogo
 
 # Demande du groupe souhaité
 try {
-    $DesiredGroup = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le groupe souhaité", "User Creation", "Domain Users")
-    if ([string]::IsNullOrWhiteSpace($DesiredGroup)) {
-        Write-Host -ForegroundColor Red "Le groupe ne peut pas être vide (ou ne contenir que des espaces)."
-        exit
-    }
+    $DesiredGroup = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le groupe souhaité (laissez vide si aucun groupe n'est a rejoindre)", "User Creation", "Domain Users")
 } catch {
     Write-Host -ForegroundColor Red "Fatal error. Erreur lors de l'ouverture de la pop-up : [$_]"
     exit
@@ -239,12 +235,13 @@ try {
 
 # Vérification de l'existence du groupe
 try {
-    $Group = Get-ADGroup -Filter "Name -eq '$DesiredGroup'" -ErrorAction Stop
-    if (-not $Group) {
-        Write-Host -ForegroundColor Red -BackgroundColor DarkRed "Le groupe spécifié n'existe pas."
-        exit
+    if (-not [string]::IsNullOrWhiteSpace($DesiredGroup)) {
+        $Group = Get-ADGroup -Filter "Name -eq '$DesiredGroup'" -ErrorAction Stop
+        if (-not $Group) {
+            Write-Host -ForegroundColor Red -BackgroundColor DarkRed "Le groupe spécifié n'existe pas."
+            exit
+        }
     }
-
     Write-Host -ForegroundColor Cyan -BackgroundColor DarkMagenta "Group to join : [$DesiredGroup]"
 } catch {
     Write-Host -ForegroundColor Red "Erreur lors de la vérification du groupe : [$_]"
@@ -276,18 +273,23 @@ try {
 
 # Ajout de l'utilisateur au groupe spécifié
 try {
-    Write-Host -ForegroundColor Yellow "Ajout de l'utilisateur '$FirstName $LastName' dans le groupe '$DesiredGroup' EN COURS..."
+    if (-not [string]::IsNullOrWhiteSpace($DesiredGroup)) {
+        Write-Host -ForegroundColor Yellow "Ajout de l'utilisateur '$FirstName $LastName' dans le groupe '$DesiredGroup' EN COURS..."
 
-    # Vérification si l'utilisateur est déjà membre du groupe
-    $IsMember = Get-ADGroupMember -Identity $DesiredGroup | Where-Object { $_.SamAccountName -eq $SamAccountName }
+        # Vérification si l'utilisateur est déjà membre du groupe
+        $IsMember = Get-ADGroupMember -Identity $DesiredGroup | Where-Object { $_.SamAccountName -eq $SamAccountName }
 
-    if ($IsMember) {
-        Write-Host -ForegroundColor Cyan "L'utilisateur '$FirstName $LastName' est déjà membre du groupe '$DesiredGroup'."
-        Write-Host -ForegroundColor Green -BackgroundColor DarkGreen "L'utilisateur '$FirstName $LastName' a été créé dans le domaine '$DomainName' et etait deja dans le groupe '$DesiredGroup' avec SUCCÈS !"
+        if ($IsMember) {
+            Write-Host -ForegroundColor Cyan "L'utilisateur '$FirstName $LastName' est déjà membre du groupe '$DesiredGroup'."
+            Write-Host -ForegroundColor Green -BackgroundColor DarkGreen "L'utilisateur '$FirstName $LastName' a été créé dans le domaine '$DomainName' et etait deja dans le groupe '$DesiredGroup' avec SUCCÈS !"
+        } else {
+            Add-ADGroupMember -Identity $DesiredGroup -Members $SamAccountName -ErrorAction Stop
+            Write-Host -ForegroundColor Green "Utilisateur ajouté au groupe avec succès."
+            Write-Host -ForegroundColor Green -BackgroundColor DarkGreen "L'utilisateur '$FirstName $LastName' a été créé dans le domaine '$DomainName' et a été ajouté au groupe '$DesiredGroup' avec SUCCÈS !"
+        }
     } else {
-        Add-ADGroupMember -Identity $DesiredGroup -Members $SamAccountName -ErrorAction Stop
-        Write-Host -ForegroundColor Green "Utilisateur ajouté au groupe avec succès."
-        Write-Host -ForegroundColor Green -BackgroundColor DarkGreen "L'utilisateur '$FirstName $LastName' a été créé dans le domaine '$DomainName' et a été ajouté au groupe '$DesiredGroup' avec SUCCÈS !"
+        Write-Host -ForegroundColor Cyan "Aucun groupe spécifié. L'utilisateur ne sera ajouté à aucun groupe."
+        Write-Host -ForegroundColor Green -BackgroundColor DarkGreen "L'utilisateur '$FirstName $LastName' a été créé dans le domaine '$DomainName' avec SUCCÈS !"
     }
 } catch {
     Write-Host -ForegroundColor Red "Erreur lors de l'ajout de l'utilisateur au groupe : [$_]"
