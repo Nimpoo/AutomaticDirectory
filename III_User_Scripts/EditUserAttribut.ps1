@@ -84,7 +84,7 @@ try {
 
 # Demander l'attribut à modifier
 try {
-    $Attribute = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le nom de l'attribut que vous souhaitez modifier pour l'utilisateur '$($ExistingUser.Name)' (par exemple, 'Department', 'Title', 'EmailAddress', etc.)", "Modifier l'attribut de l'utilisateur", "Department")
+    $Attribute = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le nom de l'attribut que vous souhaitez modifier pour l'utilisateur '$($ExistingUser.Name)' (par exemple, 'Department', 'Title', 'EmailAddress', etc.)", "Edit User Attribute", "Department")
     if ([string]::IsNullOrWhiteSpace($Attribute)) {
         Write-Host -ForegroundColor Red "L'attribut ne peut pas être vide (ou ne contenir que des espaces)."
         exit
