@@ -70,6 +70,14 @@ try {
     exit
 }
 
+# Importer le module Active Directory
+try {
+    Import-Module ActiveDirectory -ErrorAction Stop
+} catch {
+    Write-Host -ForegroundColor Red "Erreur lors de l'importation du module Active Directory : [$_]"
+    exit
+}
+
 
 # Charger l'assembly Microsoft.VisualBasic pour pouvoir ouvrir des pop-ups
 try {
