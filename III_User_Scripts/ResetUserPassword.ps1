@@ -82,7 +82,7 @@ try {
 
 # L'utilisateur dont le password va etre reset
 try {
-    $User = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le 'SamAccountName' de l'utilisateur dont vous voulez reset le password. ('SamAccountName' = premiere lettre du 'GivenName' suivi du 'Surname' (prenom puis nom de famille) en minuscule. Exemple : 'Zoro Roronoa' -> 'SamAccountName' = 'zroronoa')", "Reste User Password", "zroronoa")
+    $User = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le 'SamAccountName' de l'utilisateur dont vous voulez reset le password. ('SamAccountName' = premiere lettre du 'GivenName' suivi du 'Surname' (prenom puis nom de famille) en minuscule. Exemple : 'Zoro Roronoa' -> 'SamAccountName' = 'zroronoa')", "Reset User Password", "zroronoa")
     if ([string]::IsNullOrWhiteSpace($User)) {
         Write-Host -ForegroundColor Red "Le 'SamAccountName' ne peut pas être vide (ou ne contenir que des espaces)."
         exit
