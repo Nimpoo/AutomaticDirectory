@@ -41,6 +41,14 @@ try {
     exit
 }
 
+# Importer le module Active Directory
+try {
+    Import-Module ActiveDirectory -ErrorAction Stop
+} catch {
+    Write-Host -ForegroundColor Red "Erreur lors de l'importation du module Active Directory : [$_]"
+    exit
+}
+
 # Nom du groupe a creer
 try {
     $GroupName = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le nom du groupe que vous voulez creer.", "Create Group", "Informatique")
