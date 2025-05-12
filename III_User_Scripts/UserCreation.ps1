@@ -80,6 +80,14 @@ try {
     exit
 }
 
+# Importer le module Active Directory
+try {
+    Import-Module ActiveDirectory -ErrorAction Stop
+} catch {
+    Write-Host -ForegroundColor Red "Erreur lors de l'importation du module Active Directory : [$_]"
+    exit
+}
+
 # Take the firstname
 try {
     $FirstName = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le prenom du futur utilisateur", "User Creation", "Zoro")
