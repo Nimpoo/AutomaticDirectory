@@ -45,7 +45,7 @@ try {
 try {
     $User = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le 'SamAccountName' de l'utilisateur dont vous voulez modifier un attribut. ('SamAccountName' = premiere lettre du 'GivenName' suivi du 'Surname' (prenom puis nom de famille) en minuscule. Exemple : 'Zoro Roronoa' -> 'SamAccountName' = 'zroronoa')", "Edit User Attribute", "zroronoa")
     if ([string]::IsNullOrWhiteSpace($User)) {
-        Write-Host -ForegroundColor Red "Le 'SamAccountName' ne peut pas être vide (ou ne contenir que des espaces)."
+        Write-Host -ForegroundColor Red -BackgroundColor DarkRed "Le 'SamAccountName' ne peut pas être vide (ou ne contenir que des espaces)."
         exit
     }
 } catch {
@@ -86,14 +86,14 @@ try {
 try {
     $Attribute = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le nom de l'attribut que vous souhaitez modifier pour l'utilisateur '$($ExistingUser.Name)' (par exemple, 'Department', 'Title', 'EmailAddress', etc.)", "Edit User Attribute", "Department")
     if ([string]::IsNullOrWhiteSpace($Attribute)) {
-        Write-Host -ForegroundColor Red "L'attribut ne peut pas être vide (ou ne contenir que des espaces)."
+        Write-Host -ForegroundColor Red -BackgroundColor DarkRed "L'attribut ne peut pas être vide (ou ne contenir que des espaces)."
         exit
     }
 
     # Vérification de la validité de l'attribut
     $UserAttributes = Get-ADUser -Identity $User -Properties * -ErrorAction Stop
     if (-not ($UserAttributes.PSObject.Properties.Name -contains $Attribute)) {
-        Write-Host -ForegroundColor Red "L'attribut spécifié '$Attribute' n'est pas valide pour l'utilisateur '$($ExistingUser.Name)'."
+        Write-Host -ForegroundColor Red -BackgroundColor DarkRed "L'attribut spécifié '$Attribute' n'est pas valide pour l'utilisateur '$($ExistingUser.Name)'."
         exit
     }
 } catch {
