@@ -149,4 +149,4 @@ try {
     exit
 }
 
-Write-Host -ForegroundColor Green -BackgroundColor DarkGreen "Le password de l'utilisateur $($ExistingUser.Name + ' ' + $ExistingUser.GivenName + '(' + $ExistingUser.SamAccountName + ')') a ete reset avec succes ! Il devra changer son password a sa prochaine reconnection."
+Write-Host -ForegroundColor Green -BackgroundColor DarkGreen "Le password de l'utilisateur $($ExistingUser.Name + ' ' + $ExistingUser.GivenName + ' (' + $ExistingUser.SamAccountName + ')') a ete reset avec succes ! Il devra changer son password a sa prochaine reconnection."
