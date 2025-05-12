@@ -167,7 +167,7 @@ try {
             $var = $item.SamAccountName
             $existingUser = Get-ADGroup -Filter { SamAccountName -eq $var } -ErrorAction SilentlyContinue
             if ($existingUser) {
-                Write-Host -ForegroundColor Yellow "L'utilisateur avec SamAccountName '$($item.SamAccountName)' existe déjà."
+                Write-Host -ForegroundColor Yellow "Le groupe avec SamAccountName '$($item.SamAccountName)' existe déjà."
                 continue
             }
 
