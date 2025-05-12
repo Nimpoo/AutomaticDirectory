@@ -1,11 +1,3 @@
-# Importer le module Active Directory
-try {
-    Import-Module ActiveDirectory -ErrorAction Stop
-} catch {
-    Write-Host -ForegroundColor Red "Erreur lors de l'importation du module Active Directory : [$_]"
-    exit
-}
-
 # Chargement de l'assembly "Microsoft.VisualBasic" pour le InputDialog
 try {
     Add-Type -AssemblyName Microsoft.VisualBasic
@@ -54,6 +46,14 @@ try {
     Write-Host -ForegroundColor Green "Ce serveur est un contrôleur de domaine."
 } catch {
     Write-Host -ForegroundColor Red "Erreur lors de la vérification du statut du contrôleur de domaine : [$_]"
+    exit
+}
+
+# Importer le module Active Directory
+try {
+    Import-Module ActiveDirectory -ErrorAction Stop
+} catch {
+    Write-Host -ForegroundColor Red "Erreur lors de l'importation du module Active Directory : [$_]"
     exit
 }
 
