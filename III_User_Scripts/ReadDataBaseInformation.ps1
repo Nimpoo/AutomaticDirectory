@@ -41,6 +41,14 @@ try {
     exit
 }
 
+# Importer le module Active Directory
+try {
+    Import-Module ActiveDirectory -ErrorAction Stop
+} catch {
+    Write-Host -ForegroundColor Red "Erreur lors de l'importation du module Active Directory : [$_]"
+    exit
+}
+
 # L'utilisateur a filtrer
 try {
     $User = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le 'SamAccountName' d'un utilisateur pour filtrer les resultats. Laissez vide pour ne rien filtrer ('SamAccountName' = premiere lettre du 'GivenName' suivi du 'Surname' (prenom puis nom de famille) en minuscule. Exemple : 'Zoro Roronoa' -> 'SamAccountName' = 'zroronoa')", "Read Data Base Information", "")
