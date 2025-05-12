@@ -129,7 +129,12 @@ if ($Path -match "_Users\.csv$") {
 }
 
 # Importer le module Active Directory
-Import-Module ActiveDirectory
+try {
+    Import-Module ActiveDirectory -ErrorAction Stop
+} catch {
+    Write-Host -ForegroundColor Red "Erreur lors de l'importation du module Active Directory : [$_]"
+    exit
+}
 
 # Importer les utilisateurs et les groupes dans Active Directory
 try {
