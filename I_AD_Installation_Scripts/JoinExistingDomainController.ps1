@@ -40,6 +40,14 @@ try {
     exit
 }
 
+# Importer le module Active Directory
+try {
+    Import-Module ActiveDirectory -ErrorAction Stop
+} catch {
+    Write-Host -ForegroundColor Red "Erreur lors de l'importation du module Active Directory : [$_]"
+    exit
+}
+
 # Pop-up ouverte pour taper le nom du Controlleur de Domain
 try {
     $DomainAddress = [Microsoft.VisualBasic.Interaction]::InputBox("What existing Domain Controller you want this server joins ? (exemple: nimpo.local)", "Joining an existing Domain Controller", "domolia.local")
