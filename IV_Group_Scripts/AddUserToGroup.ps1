@@ -82,6 +82,26 @@ try {
     exit
 }
 
+# Afficher tous les groupes de l'utilisateur
+try {
+    $UserGroups = Get-ADUser -Identity $ExistingUser.SamAccountName -Properties MemberOf -ErrorAction Stop
+
+    if (-not $UserGroups.MemberOf) {
+        Write-Host -ForegroundColor Cyan -BackgroundColor DarkMagenta "L'utilisateur '$($ExistingUser.Name)' ($($ExistingUser.SamAccountName)) n'est membre d'aucun groupe."
+    } else {
+        Write-Host -ForegroundColor Cyan -BackgroundColor DarkMagenta "Groupes dont l'utilisateur est membre :"
+        $UserGroups.MemberOf | ForEach-Object {
+            $Group = Get-ADGroup -Identity $_ -ErrorAction SilentlyContinue
+            if ($Group) {
+                Write-Host -ForegroundColor Cyan -BackgroundColor DarkMagenta "- $($Group.Name)"
+            }
+        }
+    }
+} catch {
+    Write-Host -ForegroundColor Red "Erreur lors de la vérification des groupes de l'utilisateur : [$_]"
+    exit
+}
+
 # Nom du groupe ou ajouter un user
 try {
     $GroupName = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le nom du groupe que $($ExistingUser.Name) va integrer (le 'SamAccountName' plus precisement, par defaut les 'Name' et 'SamAccountName' sont similaire pour les groupes).", "Add User To Group", "Informatique")
@@ -101,7 +121,7 @@ try {
         Write-Host -ForegroundColor Red -BackgroundColor DarkRed "Le groupe '$GroupName' n'existe pas."
         exit
     }
-    Write-Host -ForegroundColor Cyan -BackgroundColor DarkBlue "-------------------------------------------------------------------`n"
+    Write-Host -ForegroundColor Cyan -BackgroundColor DarkBlue "`n-------------------------------------------------------------------`n"
 
     Write-Host -ForegroundColor Cyan -BackgroundColor DarkCyan "Name : [$($ExistingGroup.Name)]"
     Write-Host -ForegroundColor Cyan -BackgroundColor DarkCyan "SamAccountName : [$($ExistingGroup.SamAccountName)]"
@@ -155,6 +175,21 @@ try {
         -ErrorAction Stop
 
     Write-Host -ForegroundColor Green -BackgroundColor DarkGreen "L'utilisateur '$($ExistingUser.Name)' ($($ExistingUser.SamAccountName)) a été ajouté avec succès au groupe '$($ExistingGroup.Name)' ($($ExistingGroup.SamAccountName))."
+
+    # Mise à jour des groupes de l'utilisateur
+    $UpdatedUserGroups = Get-ADUser -Identity $ExistingUser.SamAccountName -Properties MemberOf -ErrorAction Stop
+    if (-not $UpdatedUserGroups.MemberOf) {
+        Write-Host -ForegroundColor Cyan -BackgroundColor DarkGreen "L'utilisateur '$($ExistingUser.Name)' ($($ExistingUser.SamAccountName)) n'est membre d'aucun groupe."        
+    } else {
+        Write-Host -ForegroundColor Cyan -BackgroundColor DarkGreen "Mise a jour des/du groupe.s de l'utilisateur $($ExistingUser.Name) :"
+
+        $UpdatedUserGroups.MemberOf | ForEach-Object {
+            $Group = Get-ADGroup -Identity $_ -ErrorAction SilentlyContinue
+            if ($Group) {
+                Write-Host -ForegroundColor Cyan -BackgroundColor DarkGreen "- $($Group.Name)"
+            }
+        }
+    }
 } catch {
     Write-Host -ForegroundColor Red "Erreur lors de l'ajout de l'utilisateur au groupe : [$_]"
     exit
