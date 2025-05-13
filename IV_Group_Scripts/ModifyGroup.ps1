@@ -51,7 +51,7 @@ try {
 
 # Nom du groupe
 try {
-    $GroupName = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le nom du groupe que vous voulez modifier.", "Modify Group", "Informatique")
+    $GroupName = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le nom du groupe que vous voulez modifier (le 'SamAccountName' plus precisement, par defaut les 'Name' et 'SamAccountName' sont similaire pour les groupes).", "Modify Group", "Informatique")
     if ([string]::IsNullOrWhiteSpace($GroupName)) {
         Write-Host -ForegroundColor Red -BackgroundColor DarkRed "Le nom du groupe ne peut pas être vide (ou ne contenir que des espaces)."
         exit
