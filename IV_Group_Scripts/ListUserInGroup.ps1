@@ -103,12 +103,8 @@ try {
         Write-Host -ForegroundColor Green -BackgroundColor DarkGreen "Membres du groupe '$($ExistingGroup.Name)' :"
         $GroupMembers | ForEach-Object {
             $Member = $_
-            if ($Member.objectClass -eq "group") {
-                Write-Host -ForegroundColor Cyan -BackgroundColor DarkMagenta "Nom : $($Member.Name)"
-                Write-Host -ForegroundColor Cyan -BackgroundColor DarkMagenta "Type : $($Member.objectClass)`n"
-            } else {
-                Write-Host -ForegroundColor Cyan -BackgroundColor DarkCyan "Nom : $($Member.Name)"
-                Write-Host -ForegroundColor Cyan -BackgroundColor DarkCyan "Type : $($Member.objectClass)`n"
+            if ($Member.objectClass -eq "user") {
+                Write-Host -ForegroundColor Cyan -BackgroundColor DarkCyan "Name : $($Member.Name)`n"
             }
         }
     }
