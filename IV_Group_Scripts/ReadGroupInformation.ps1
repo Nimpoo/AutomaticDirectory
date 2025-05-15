@@ -86,7 +86,7 @@ try {
 
 # Nom de l'attribut du groupe à consulter
 try {
-    $GroupAttribute = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le nom de l'attribut du groupe '$($ExistingGroup.Name)' ($($ExistingGroup.SamAccountName)) à consulter (laissez vide pour tout afficher).", "Lire les informations du groupe", "")
+    $GroupAttribute = [Microsoft.VisualBasic.Interaction]::InputBox("Entrez le nom de l'attribut du groupe '$($ExistingGroup.Name)' ($($ExistingGroup.SamAccountName)) à consulter (laissez vide pour tout afficher).", "Read group Information", "")
 } catch {
     Write-Host -ForegroundColor Red "Erreur fatale. Erreur lors de l'ouverture de la pop-up : [$_]"
     exit
