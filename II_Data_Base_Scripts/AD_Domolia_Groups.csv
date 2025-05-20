@@ -1,0 +1,4 @@
+Name;SamAccountName;GroupScope
+"Developers";"devs";"DomainLocal"
+"Managers";"mgrs";"DomainLocal"
+"Guests";"guests";"DomainLocal"
